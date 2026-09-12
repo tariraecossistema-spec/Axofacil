@@ -1,0 +1,6 @@
+{
+  "name": "Axofácil!",
+  "description": "Diretório e marketplace para Maputo e Matola — Lojas, Auto Peças, Supermercados, Material de Construção, Bares, Hospedagens, Turismo & Logística e Sincronização de Bilhetes de Viagens Aéreas com Aeroportos Nacionais e Internacionais.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

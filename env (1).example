@@ -1,0 +1,28 @@
+# ── Supabase (Database, Auth & Storage) ───────────────────────────────
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+SUPABASE_URL=
+SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+
+# ── Cloudinary (Image & Media CDN Storage) ─────────────────────────────
+VITE_CLOUDINARY_CLOUD_NAME=
+VITE_CLOUDINARY_UPLOAD_PRESET=
+VITE_CLOUDINARY_API_KEY=
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+
+# ── ImgBB (Alternative Image Hosting) ──────────────────────────────────
+VITE_IMGBB_API_KEY=
+
+# ── Master Administrator Credentials ────────────────────────────────────
+VITE_ADMIN_EMAIL=
+VITE_ADMIN_PASSWORD=
+ADMIN_EMAIL=
+ADMIN_PASSWORD=
+
+# ── Optional Integrations ────────────────────────────────────────────────
+GOOGLE_MAPS_PLATFORM_KEY=
+VITE_GOOGLE_MAPS_PLATFORM_KEY=
+GEMINI_API_KEY=
