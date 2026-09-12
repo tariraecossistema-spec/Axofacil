@@ -1,0 +1,167 @@
+import React from 'react';
+import { Establishment } from "./types";
+import { Car, ShoppingCart, GlassWater, BedDouble, HardHat, Shirt, ChevronRight, Plane, Truck, Flower2 } from 'lucide-react';
+import NowBoardingHeroBanner from './NowBoardingHeroBanner';
+
+export type SegmentPageTarget = 'lojas' | 'supermercados' | 'bares' | 'hospedagens' | 'construcao' | 'turismo' | 'entregadores';
+
+interface SegmentDefinition {
+  id: string;
+  label: string;
+  description: string;
+  icon: React.ElementType;
+  targetPage: SegmentPageTarget;
+  segmentFilter?: string; // narrows the target page to a sub-set of its establishments, e.g. 'pecas_auto'
+  accent: string; // tailwind color token used for icon/border accents
+}
+
+const SEGMENTS: SegmentDefinition[] = [
+  {
+    id: 'loja',
+    label: 'Loja de retalho e moda',
+    description: 'Boutiques, vestuário, calçado, moda e retalho na Baixa e arredores',
+    icon: Shirt,
+    targetPage: 'lojas',
+    accent: 'text-indigo-brand'
+  },
+  {
+    id: 'supermercado',
+    label: 'Supermercados frescos',
+    description: 'Produtos alimentares, frescos, mercearia a grosso e retalho',
+    icon: ShoppingCart,
+    targetPage: 'supermercados',
+    accent: 'text-emerald-700'
+  },
+  {
+    id: 'bar',
+    label: 'Bar e lounge bar',
+    description: 'Bares, lounges, esplanadas, cocktails, petiscos e noite',
+    icon: GlassWater,
+    targetPage: 'bares',
+    accent: 'text-amber-700'
+  },
+  {
+    id: 'hospedagem',
+    label: 'Hospedagem e hotéis',
+    description: 'Hotéis, lodges, suítes executivas, pensões e diárias',
+    icon: BedDouble,
+    targetPage: 'hospedagens',
+    accent: 'text-rose-700'
+  },
+  {
+    id: 'turismo',
+    label: 'Turismo e safaris',
+    description: 'Safaris, pacotes de viagem, bilhetes de voo LAM/TAP e excursões',
+    icon: Plane,
+    targetPage: 'turismo',
+    accent: 'text-cyan-700'
+  },
+  {
+    id: 'construcao',
+    label: 'Material de construção',
+    description: 'Cimento, chapas de zinco, brita, areia de rio e estaleiros',
+    icon: HardHat,
+    targetPage: 'construcao',
+    accent: 'text-orange-700'
+  },
+  {
+    id: 'pecas_auto',
+    label: 'Peças',
+    description: 'Lojas de peças auto, baterias, filtros, lubrificantes e mecânica',
+    icon: Car,
+    targetPage: 'lojas',
+    segmentFilter: 'pecas_auto',
+    accent: 'text-blue-700'
+  },
+  {
+    id: 'entregador',
+    label: 'Logística, fretes e transporte',
+    description: 'Estafetas, motoboys, carrinhas de carga e fretes express em Maputo & Matola',
+    icon: Truck,
+    targetPage: 'entregadores',
+    accent: 'text-indigo-700'
+  },
+  {
+    id: 'floricultura',
+    label: 'Floricultura & Decoração',
+    description: 'Flores frescas, buquês, arranjos para presentes, plantas decorativas e jardinagem',
+    icon: Flower2,
+    targetPage: 'lojas',
+    segmentFilter: 'floricultura',
+    accent: 'text-pink-700'
+  }
+];
+
+interface SegmentSelectorProps {
+  establishments: Establishment[];
+  onSelectSegment: (targetPage: SegmentPageTarget, segmentFilter?: string) => void;
+}
+
+export default function SegmentSelector({ establishments, onSelectSegment }: SegmentSelectorProps) {
+  const countFor = (seg: SegmentDefinition) => {
+    if (seg.segmentFilter) {
+      return establishments.filter(e => e.category === seg.segmentFilter).length;
+    }
+    return establishments.filter(e => e.category === seg.id).length;
+  };
+
+  return (
+    <div className="min-h-screen bg-paper pb-16">
+      
+      <NowBoardingHeroBanner 
+        category="segmentos"
+        pageTitle="Escolha de Segmento"
+        pageSubtitle="Explore por Categorias e Especialidades"
+        heightClass="min-h-[380px] sm:min-h-[440px]"
+        isLandingPage={false}
+        showPromoButton={false}
+      />
+
+      <div className="bg-white text-slate-900 pt-10 pb-12 px-[6vw] mb-10 border-b border-slate-200 shadow-2xs relative">
+        <div className="capulana-strip w-full absolute top-0 left-0 right-0" />
+        <div className="max-w-4xl mx-auto text-center space-y-3 pt-2">
+          <span className="inline-flex items-center gap-2 bg-slate-100 text-slate-700 text-xs font-bold py-1 px-3.5 rounded-full border border-slate-200">
+            Passo 1 de 3 · Escolher segmento
+          </span>
+          <h2 className="font-serif font-bold text-3xl sm:text-4xl text-slate-900 leading-tight">
+            O que está a procurar hoje?
+          </h2>
+          <p className="text-sm sm:text-base text-slate-600 max-w-xl mx-auto">
+            Escolha um segmento para ver as lojas e serviços disponíveis na sua cidade.
+          </p>
+        </div>
+      </div>
+
+      <div className="px-[6vw] max-w-4xl mx-auto w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {SEGMENTS.map((seg, idx) => {
+            const Icon = seg.icon;
+            const count = countFor(seg);
+            return (
+              <button
+                key={`seg-${seg.id}-${idx}`}
+                type="button"
+                onClick={() => onSelectSegment(seg.targetPage, seg.segmentFilter)}
+                className="group text-left bg-white border border-ink/12 rounded-2xl p-5 shadow-xs hover:shadow-md hover:-translate-y-0.5 hover:border-indigo-brand/40 transition-all cursor-pointer flex items-center gap-4"
+              >
+                <div className={`w-14 h-14 rounded-xl bg-sand-2/50 flex items-center justify-center shrink-0 ${seg.accent}`}>
+                  <Icon className="w-7 h-7" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-sans font-bold text-sm text-ink group-hover:text-indigo-brand transition-colors">
+                    {seg.label}
+                  </h3>
+                  <p className="text-xs text-ink/60 leading-relaxed mt-0.5">{seg.description}</p>
+                  <span className="text-[10px] font-bold text-ink/40 uppercase tracking-wider mt-1.5 inline-block">
+                    {count} {count === 1 ? 'estabelecimento' : 'estabelecimentos'}
+                  </span>
+                </div>
+                <ChevronRight className="w-5 h-5 text-ink/25 group-hover:text-indigo-brand group-hover:translate-x-0.5 transition-all shrink-0" />
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
